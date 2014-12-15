@@ -1,0 +1,72 @@
+    <script src="jQuery.js"></script><!-- 使用 jQuery 核心 -->
+    <script src="cppy.js"></script><!-- 使用 cppy 函式 -->
+    <script src="json.js"></script><!-- 範例的模擬數據 -->
+
+    <script>
+    $(function (){
+
+        
+        // Demo 1
+            
+            /**
+             * 初始化
+             * demo_1   自訂唯一的辨識名稱
+             * [cppy]   自訂綁定的屬性。也可以使用指定 class
+             * true     要移除模板(不顯示)
+             */
+            cppy.init("demo_1", "[cppy]", true);
+
+            $(".add_1_a").on("click", function (){
+                /**
+                 * 逐筆輸出資料
+                 * demo_1   此範例要 each 到的自訂位置。因由init定義過，會去尋找屬性[cppy]的位置
+                 * json     要逐筆輸出的數據
+                 * asc      依照數據升冪排列，如同數據排列。
+                 */
+                cppy.each("demo_1", json, "asc");
+            });
+            
+            $(".add_1_b").on("click", function (){
+                cppy.each("demo_1", json2, "asc");
+            });
+
+        // Demo 2 透過AJAX的範例
+            cppy.init("demo_2", "[cppy2]", true);
+            $(".add_2").on("click", function (){
+                $.get("http://beta.json-generator.com/api/json/get/AhJUXgh", function (obj){
+                    cppy.each("demo_2", obj, "asc");
+                });
+            })
+
+
+    });
+    </script>
+
+    <h1>Demo</h1>
+    <div>
+        <button class="add_1_a">增加 A 資料</button>
+        <button class="add_1_b">增加 B 資料</button>
+        <table border="1" width="600">
+
+            <tbody cppy><!-- 自訂屬性 cppy 用來表示基本位置 -->
+               <tr cppytemp data-id="$id"><!-- 規定屬性 cppytemp 指定可以迴圈的模板 -->
+                   <td>檢視包圍標籤的屬性含有 data-id = $id </td>
+                   <td>$title</td>
+                   <td>$content</td>
+               </tr>
+            </tbody>
+        
+        </table>
+    </div>
+
+
+    <h1>Demo3</h1>
+    <button class="add_2">AJAX增加選單</button>
+    <a href="http://beta.json-generator.com/api/json/get/AhJUXgh">遠端JSON數據</a>
+    <div>
+        <select cppy2 multiple>
+            <option cppytemp id="$id" value="$value">$title</option>
+            <option value="">我是已存在的項目，非AJAX的</option>
+        </select>
+    </div>
+
