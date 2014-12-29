@@ -1,122 +1,158 @@
-
-var cppy         = {};
-cppy.root        = {}; // 存放多筆根選擇器，如$("[cppy]")。
-cppy.temp        = {}; // 存放多筆複製後的模版元素
-
 /**
- * 初始化
- * @param   name           自訂唯一辨識名稱, 在使用 each() 的時候會使用
- * @param   selector_root  根的選擇器, 可指定 class 名稱
- * @param   is_temp_remove 是否顯示模板
+ * cppy - jQuery Plugin
+ * version: 1.2.0 (2014/12/29)
+ * https://github.com/fdjkgh580/cppy.js
  */
-cppy.init = function (name, selector_root, is_temp_remove){
+(function ($) {
+    /**
+     * 存放多筆複製後的模版元素
+     * 如temp[選擇器名稱]作為辨識
+     */
+    var temp        = {}; 
 
-    //若已經初始化過了
-    if (this.root[name]) return this;
-    
-    //根對應記錄起來
-    this.root[name] = $(selector_root);
+    /**
+     * 預先隱藏模板，避免取得AJAX回應較慢時會看到模版。
+     */
+    $("head").append("<style>[cppytemp]{display:none}</style>");
 
-    //模板對應記錄起來
-    this.tmep_clone(name);
+    /**
+     * 使用
+     * @param   datalist    務必使用二維數據如 json 格式，因為分別代表了列與行
+     * @param   asc_desc    (選)排序方式 asc(預設) | desc
+     * @return              this
+     */
+    $.fn.cppy = function(datalist, asc_desc) {
+        
+        //當前使用的選擇器
+        var selector = this.selector; 
 
-    //移除模版？
-    if (is_temp_remove == true) {
-        this.temp_remove(name);
-    }
-
-    //過濾模板的屬性
-    this.temp_filter(name);
-    
-    return this;
-}
-
-
-/**
- * 移除模板
- * @param   name 辨識名稱
- */
-cppy.temp_remove = function (name){
-    this.root[name].find("[cppytemp]").remove();
-}
-
-/**
- * 複製模板
- * @param   name 辨識名稱
- */
-cppy.tmep_clone = function (name){
-    this.temp[name] = this.root[name].find("[cppytemp]").clone();
-    return this;
-}
-
-/**
- * 過濾模板的屬性, 避免出現不必要的 cppytemp 屬性
- * @param   name 辨識名稱
- */
-cppy.temp_filter = function (name){
-    this.temp[name].removeAttr("cppytemp")
-}
-
-/**
- * 在模板中賦予替換值, 如將 $title 替換成 標題
- * @param   newtemp 新模板
- * @param   key     要替換的符號值, 如 $title $content
- * @param   val     替換後的值
- * @return          HTML的編碼
- */
-cppy.key2val = function (newtemp, key, val){
-    var re = new RegExp("\\$" + key, "g");
-
-    // 由上一層來取得包含自己的程式碼，因為符號值可能存在 cppytemp 的屬性。
-    // 取得後再去替換符號值
-    var htmlcode = newtemp
-        .wrap("<span class='cppy_itemwrap'></span>")
-        .parent()
-        .html()
-        .replace(re, val);
-
-    return htmlcode;
-}
-
-/**
- * 批次每一列的鍵轉換為值
- * @param   name     辨識名稱
- * @param   datainfo 每一列
- * @return           替換符號值後的新模板
- */
-cppy.each_info = function (name, datainfo){
-    var _this = this;
-    var newtemp = this.temp[name].clone();
-
-    $.each(datainfo, function(key, val) {
-        var htmlcode = _this.key2val(newtemp, key, val);
-        // 替換整個模板，因為有可能要替換的值位於 cppytemp 的屬性
-        newtemp = $(htmlcode);
-    });
-
-    return newtemp;
-}
-
-/**
- * 輸出數據的每一列, 並添加到基本位置
- * @param   name        辨識名稱
- * @param   obj         物件或陣列的對應值。例如 {"0":{"title":"標題","content":"內容"}}
- * @param   asc_desc    插入資料的排序方式：asc 順著 | desc 逆著
- * @return       this
- */
-cppy.each = function (name, obj, asc_desc){
-    var _this = this;
-    $.each(obj, function(key, datainfo) {
-
-        // 替換該列後的資料
-        var replace_datainfo = _this.each_info(name, datainfo);  
-
-        if (asc_desc == "desc") {
-            _this.root[name].prepend(replace_datainfo);
+        // 模板 複製
+        this.tmep_clone = function (){
+            var find = $(selector).find("[cppytemp]");
+            if (find.length == 0) 
+            {
+                console.log(selector + "請先設定模版屬性 [cppytemp]");
+                return false;
+            }
+            temp[selector] = $(selector).find("[cppytemp]").clone();
+            return this;
         }
-        else {
-            _this.root[name].append(replace_datainfo);
+
+        // 模板 移除
+        this.temp_remove = function (){
+            $(selector).find("[cppytemp]").remove();
+            return this;
         }
-    });
-    return this;
-}
+
+        // 過濾模板的屬性
+        this.temp_filter = function (){
+            temp[selector].removeAttr("cppytemp")
+        }
+
+        //初始化
+        this.init = function () {
+            
+            //若初始化過了
+            if (temp[selector]) return this; 
+
+            this
+                .tmep_clone()
+                .temp_remove()
+                .temp_filter();
+
+            // console.log(temp[selector].get(0))
+            return this;
+        }
+
+        // 
+        this.isuse_eachinfo = function (datalist){
+            return ($.type(datalist) == "object") ? true : false;
+        }
+
+        // 列出每一列
+        this.each = function (datalist){
+
+            var _this = this;
+
+            // 確認輸入的資料是否只有一列
+            var bool = this.isuse_eachinfo(datalist);
+            if (bool)
+            {
+                datainfo = datalist;
+                this.each_info_pre(datainfo);
+                return this;
+            }
+
+            // 若有多列
+            $.each(datalist, function(index, datainfo) {
+                _this.each_info_pre(datainfo);
+            });
+
+            return this;
+        }
+
+        // 提取要做為替換的模板, 將每個欄位對應到模版裡, 並取得替換後的模板來覆蓋上一個的模板。
+        this.each_info_pre = function (datainfo){
+
+            var for_replace_temp = temp[selector]; 
+
+            for_replace_temp = this.each_info(for_replace_temp, datainfo);
+            
+            // 依照排序方式插入
+            if (asc_desc == "desc") {
+                $(selector).prepend(for_replace_temp);
+            }
+            else {
+                $(selector).append(for_replace_temp);
+            }
+        }
+
+        // 讀出該列的每個欄位
+        this.each_info = function (for_replace_temp, datainfo){
+
+            var _this = this;
+
+            // 開始替換到模版裡。
+            // 當替換第一個欄位後，會繼續使用當前html做第二個欄位替換的動作。
+            // 
+            // 例如模版 <div id="$key">$val</div>
+            // 該列欄位有 {key: "001", val: "Chinese"}
+            // 第一次替換完後會變成 <div id="001">$val</div>，
+            // 此時務必再將 <div id="001">$val</div> 作為模版供第二次使用；
+            // 而不是使用 <div id="$key">$val</div>
+            $.each(datainfo, function(key, val) {
+                
+                var htmlcode = _this.key2val(for_replace_temp, key, val)
+                
+                //經過每個欄位替換後的模版重新賦予
+                for_replace_temp = $(htmlcode);
+            
+            });
+
+            //每個欄位都替換完了
+            return for_replace_temp;
+        }
+
+        // 在模版裡對應的變數做替換, 如 {title: "標題"} 會尋找模版裡的 $title 替還為 "標題" 
+        this.key2val = function (for_replace_temp, key, val){
+
+            var re = new RegExp("\\$" + key, "g");
+            
+            // 需要從 [cppytemp] 的上一層做替換
+            // 因為 $變數 也可以寫在與 [cppytemp] 相同的元素上
+            var htmlcode = for_replace_temp
+                .wrap("<span class='cppy_itemwrap'></span>")
+                .parent()
+                .html()
+                .replace(re, val);
+
+           return htmlcode;
+        }
+
+
+        this.init();
+        if (datalist) return this.each(datalist); 
+        return this;
+    };
+
+}( jQuery ));
