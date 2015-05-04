@@ -1,0 +1,33 @@
+<script src="jQuery.js"></script><!-- 使用 jQuery 核心 -->
+<script src="cppy.js"></script><!-- 使用 cppy 外掛 -->
+
+<script>
+$(function (){
+
+    // ===== 逐筆加入資料 ===== //
+
+    // 1. 一開始們以任何資料，只有模板
+    $("[cppy3]").cppy();
+    
+    // 2. 加入一筆資料後渲染
+    var data = {
+        title: "蘋果",
+        price: 50
+    };
+
+    $("[cppy3]").cppy(data);
+
+    // 3. 再加入一筆資料後渲染
+    var data = {
+        title: "西瓜",
+        price: 200
+    };
+
+    $("[cppy3]").cppy(data);
+
+});
+</script>
+
+<ul cppy3>
+    <li cppytemp>$title : $$price </li>
+</ul>

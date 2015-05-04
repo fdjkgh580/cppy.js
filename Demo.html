@@ -4,6 +4,7 @@
     <script>
     $(function (){
 
+        // ===== 一開始就加入資料後，再渲染 ===== //
         $("[cppy]").cppy(
             [
                 {
@@ -46,14 +47,6 @@
         $("table").on("click", "td", function (){
             alert("已綁定")
         });
-
-        // 單筆資料的可能狀況
-        $("[cppy3]").cppy();
-        var data = {
-            title: "蘋果",
-            price: 50
-        };
-        $("[cppy3]").cppy(data);
 
     });
     </script>

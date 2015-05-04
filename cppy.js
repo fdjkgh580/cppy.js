@@ -1,6 +1,6 @@
 /**
  * cppy - jQuery Plugin
- * version: 1.2.0 (2014/12/29)
+ * version: 1.3.0 (2015/05/04)
  * https://github.com/fdjkgh580/cppy.js
  */
 (function ($) {
@@ -126,10 +126,44 @@
                 
                 //經過每個欄位替換後的模版重新賦予
                 for_replace_temp = $(htmlcode);
-            
+
             });
 
-            //每個欄位都替換完了
+            //是否有要自動替換圖片路徑
+            for_replace_temp = _this.replace_imgpath(for_replace_temp);
+            
+            //每個欄位都替換完了、有圖片路徑的也替換完了
+            return for_replace_temp;
+        }
+
+        //可以自動替換圖片路徑
+        this.replace_imgpath = function (for_replace_temp){
+
+            //查看指定圖片的屬性是否存在
+            var cimg_val = for_replace_temp.attr("data-cppyimg");
+
+            if (cimg_val) {
+
+                //標籤名稱
+                var tagname = for_replace_temp.prop("tagName").toLowerCase();
+
+                // <img>
+                if (tagname == "img") {
+                    for_replace_temp.attr("src", cimg_val);
+                }
+
+                // 非 <img>
+                else {
+                    for_replace_temp.css({
+                        "background-image": "url(" + cimg_val + ")"
+                    });
+                }
+
+                // 去除屬性
+                for_replace_temp.removeAttr("data-cppyimg");
+            }
+
+        
             return for_replace_temp;
         }
 
@@ -140,13 +174,15 @@
             
             // 需要從 [cppytemp] 的上一層做替換
             // 因為 $變數 也可以寫在與 [cppytemp] 相同的元素上
-            var htmlcode = for_replace_temp
+            var inhtml_str = for_replace_temp
                 .wrap("<span class='cppy_itemwrap'></span>")
                 .parent()
-                .html()
-                .replace(re, val);
+                .html();
+            
+            // 替換
+            htmlcode = inhtml_str.replace(re, val);
 
-           return htmlcode;
+            return htmlcode;
         }
 
 

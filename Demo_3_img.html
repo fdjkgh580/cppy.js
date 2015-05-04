@@ -1,0 +1,34 @@
+<script src="jQuery.js"></script><!-- 使用 jQuery 核心 -->
+<script src="cppy.js"></script><!-- 使用 cppy 外掛 -->
+
+<script>
+$(function (){
+
+    // ===== 加入圖片的做法 ===== //
+
+    // 利用屬性 data-cppyimg ，將要顯示的圖片路徑，指定在如 data-cppyimg="$your_image_url"
+
+    // 接著有兩種方式：
+    
+    // 一. 使用 <img> src
+    $(".use_img").cppy({
+        title: "圖片",
+        img: "http://www.wondershow.tw/images_images/FrontEnd/web_elida/all-sbe7a560ffa.png"
+    });
+
+    // 二. 使用 background-image
+    $(".not_img").cppy({
+        title: "背景圖",
+        img: "http://www.wondershow.tw/images_images/FrontEnd/web_elida/all-sbe7a560ffa.png"
+    });
+
+});
+</script>
+
+<div class="use_img">
+    <img cppytemp title="$title" data-cppyimg="$img" style="width: 100px; height: 100px;">
+</div>
+
+<div class="not_img">
+    <div cppytemp title="$title" data-cppyimg="$img" style="width: 100px; height: 100px;"></div>
+</div>
