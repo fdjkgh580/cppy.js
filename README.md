@@ -2,6 +2,12 @@ cppy.js
 =======
 依照JSON數據，自動在地模版，簡化你的工作。
 
+步驟
+一、使用 $(selector).cppy(json格式, 降冪或升冪排序) 綁定你要迴圈的區塊
+二、使用關鍵字 cppytemp 屬性，添加在你希望的模板位置。
+三、使用 $ 為開頭的文字，作為你的欄位名稱。例如資料 {title: "星期一"} 就使用「$title」，執行後 $title 未被轉換為「星期一」。
+四、若需要從JSON數據指定圖片，避免 console.log 發出 404 ，所以我們需要使用屬性 data-cppyimg 作為指定路徑。
+
     [一般方式]
     $(".box").cppy(
         [
@@ -52,5 +58,17 @@ cppy.js
         <li cppytemp>$title : $$price </li>
     </ul>
     
-    [其餘參考範例]
-
+    [圖片方式]
+    $(".not_img").cppy({
+        title: "背景圖",
+        img: "images/flower.jpg"
+    });
+    
+    <div class="not_img">
+        <div cppytemp>
+            <img cppytemp class="callimg" title="$title" data-cppyimg="$img">
+            <div class="callimg" title="$title" data-cppyimg="$img"></div>
+            <i class="callimg" title="$title" data-cppyimg="$img"></i>
+        </div>
+    </div>
+    
