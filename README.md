@@ -4,9 +4,7 @@ cppy.js
 
 ##步驟
 
-- 使用
-    $(selector).cppy(json格式, 降冪或升冪排序)
-綁定你要迴圈的區塊
+- 使用 $(selector).cppy(json格式, 降冪或升冪排序) 綁定你要迴圈的區塊
 
 - 使用關鍵字 cppytemp 屬性，添加在你希望的模板位置。
 
