@@ -1,72 +1,69 @@
-    <script src="jQuery.js"></script><!-- 使用 jQuery 核心 -->
-    <script src="cppy.js"></script><!-- 使用 cppy 外掛 -->
+<script src="js/jQuery.js"></script><!-- 使用 jQuery 核心 -->
+<script src="js/cppy.min.js"></script><!-- 使用 cppy 外掛 -->
 
-    <script>
-    $(function (){
+<script>
+$(function (){
 
-        // ===== 一開始就加入資料後，再渲染 ===== //
-        $("[cppy]").cppy(
-            [
-                {
-                    "id" : "0001",
-                    "title" : "星期一",
-                    "content" : "工作"
-                },
-                {   
-                    "id" : "0002",
-                    "title" : "星期二", 
-                    "content" : "旅遊"
-                }
-            ]
-        , "asc");
+    // ===== 一開始就加入資料後，再渲染 ===== //
+    $(".box").cppy(
+        [
+            {
+                "id" : "0001",
+                "title" : "星期一",
+                "content" : "工作"
+            },
+            {   
+                "id" : "0002",
+                "title" : "星期二", 
+                "content" : "旅遊"
+            }
+        ]
+    , "asc");
 
 
-        $("[cppy2]").cppy(
-            [
-                {
-                    "id" : "0001",
-                    "title" : "星期一",
-                    "content" : "工作"
-                },
-                {   
-                    "id" : "0002",
-                    "title" : "星期二", 
-                    "content" : "旅遊"
-                },
-                {
-                    "title" : "星期三",
-                    "content" : "開會"
-                },
-                {
-                    "title" : "星期四",
-                    "content" : "洗溫泉"
-                }
-            ]
-        );
+    $(".box_2").cppy(
+        [
+            {
+                "id" : "0001",
+                "title" : "星期一",
+                "content" : "工作"
+            },
+            {   
+                "id" : "0002",
+                "title" : "星期二", 
+                "content" : "旅遊"
+            },
+            {
+                "title" : "星期三",
+                "content" : "開會"
+            },
+            {
+                "title" : "星期四",
+                "content" : "洗溫泉"
+            }
+        ]
+    );
 
-        $("table").on("click", "td", function (){
-            alert("已綁定")
-        });
-
+    //我們來確定綁定的事件也會有作用，符合邏輯。
+    $("table").on("click", "td", function (){
+        alert("已綁定")
     });
-    </script>
 
-    
-    <div cppy>
-        <ul cppytemp data-id="$id">
-            <li>$title</li>
-            <li>$content</li>
-        </ul>
-    </div>
+});
+</script>
 
 
-    <table cppy2 border="1">
-        <tr cppytemp>
-            <td>$title</td>
-            <td>$content</td>
-        </tr>
-    </table>
-
-    <ul cppy3>
-        <li cppytemp>$title : $$price </li>
+<div class="box">
+    <ul cppytemp data-id="$id">
+        <li>$title</li>
+        <li>$content</li>
     </ul>
+</div>
+
+
+<table class="box_2" border="1">
+    <tr cppytemp>
+        <td>$title</td>
+        <td>$content</td>
+    </tr>
+</table>

@@ -1,5 +1,6 @@
-<script src="jQuery.js"></script><!-- 使用 jQuery 核心 -->
-<script src="cppy.js"></script><!-- 使用 cppy 外掛 -->
+<script src="js/jQuery.js"></script><!-- 使用 jQuery 核心 -->
+<script src="js/cppy.min.js"></script><!-- 使用 cppy 外掛 -->
+
 
 <script>
 $(function (){
@@ -7,7 +8,7 @@ $(function (){
     // ===== 逐筆加入資料 ===== //
 
     // 1. 一開始們以任何資料，只有模板
-    $("[cppy3]").cppy();
+    $(".box").cppy();
     
     // 2. 加入一筆資料後渲染
     var data = {
@@ -15,7 +16,7 @@ $(function (){
         price: 50
     };
 
-    $("[cppy3]").cppy(data);
+    $(".box").cppy(data);
 
     // 3. 再加入一筆資料後渲染
     var data = {
@@ -23,11 +24,11 @@ $(function (){
         price: 200
     };
 
-    $("[cppy3]").cppy(data);
+    $(".box").cppy(data);
 
 });
 </script>
 
-<ul cppy3>
+<ul class="box">
     <li cppytemp>$title : $$price </li>
 </ul>

@@ -1,7 +1,5 @@
 /**
- * cppy - jQuery Plugin
- * version: 1.3.0 (2015/05/04)
- * https://github.com/fdjkgh580/cppy.js
+ * version: 1.4.0 (2015/05/10) https://github.com/fdjkgh580/cppy.js
  */
 (function ($) {
     /**
@@ -136,34 +134,55 @@
             return for_replace_temp;
         }
 
+
+        //依照標籤賦予不同的圖片屬性
+        this.set_diff_tagimg = function (who, img_url){
+
+            // 小寫標籤名稱
+            var tagname = who.prop("tagName").toLowerCase();
+
+            // <img>
+            if (tagname == "img") {
+                who.attr("src", img_url);
+            }
+
+            // 非 <img>
+            else {
+                who.css({
+                    "background-image": "url(" + img_url + ")"
+                });
+            }
+
+            // 去除屬性
+            who.removeAttr("data-cppyimg");
+        }
+
         //可以自動替換圖片路徑
         this.replace_imgpath = function (for_replace_temp){
 
-            //查看指定圖片的屬性是否存在
+            var _this = this;
+
+            //查看cppytemp當前元素，指定圖片的屬性是否存在
             var cimg_val = for_replace_temp.attr("data-cppyimg");
+
 
             if (cimg_val) {
 
-                //標籤名稱
-                var tagname = for_replace_temp.prop("tagName").toLowerCase();
+                //依照標籤賦予不同的圖片屬性
+                _this.set_diff_tagimg(for_replace_temp, cimg_val);
 
-                // <img>
-                if (tagname == "img") {
-                    for_replace_temp.attr("src", cimg_val);
-                }
-
-                // 非 <img>
-                else {
-                    for_replace_temp.css({
-                        "background-image": "url(" + cimg_val + ")"
-                    });
-                }
-
-                // 去除屬性
-                for_replace_temp.removeAttr("data-cppyimg");
             }
 
-        
+            //查看cppytemp底下元素，指定圖片的屬性是否存在
+            for_replace_temp.find("[data-cppyimg]").each(function (key, ele){
+
+                var cimg_val = $(ele).attr("data-cppyimg");
+
+                //依照標籤賦予不同的圖片屬性
+                _this.set_diff_tagimg($(ele), cimg_val);
+
+            })
+
             return for_replace_temp;
         }
 
