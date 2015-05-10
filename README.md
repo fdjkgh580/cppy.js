@@ -59,6 +59,7 @@ cppy.js
     </ul>
     
 [圖片方式]
+
     $(".not_img").cppy({
         title: "背景圖",
         img: "images/flower.jpg"
