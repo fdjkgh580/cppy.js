@@ -8,7 +8,7 @@ cppy.js
 三、使用 $ 為開頭的文字，作為你的欄位名稱。例如資料 {title: "星期一"} 就使用「$title」，執行後 $title 未被轉換為「星期一」。
 四、若需要從JSON數據指定圖片，避免 console.log 發出 404 ，所以我們需要使用屬性 data-cppyimg 作為指定路徑。
 
-[一般方式]
+##一般方式
     $(".box").cppy(
         [
             {
@@ -32,7 +32,7 @@ cppy.js
     </div>
     
     
-[逐筆加入資料]
+##逐筆加入資料
 
     // 1. 一開始們以任何資料，只有模板
     $(".box").cppy();
@@ -58,7 +58,7 @@ cppy.js
         <li cppytemp>$title : $$price </li>
     </ul>
     
-[圖片方式]
+##圖片方式
 
     $(".not_img").cppy({
         title: "背景圖",
