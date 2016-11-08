@@ -1,0 +1,38 @@
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../src/jquery.cppy.js"></script>
+
+<script>
+$(function (){
+
+    // 逐筆資料添加
+    
+    $().cppy(".box", {
+        id: 1,
+        text: 'First'
+    })
+
+    $().cppy(".box", {
+        id: 2,
+        text: 'Second'
+    })
+    
+    $().cppy(".box", {
+        id: 3,
+        text: 'Third'
+    })
+
+    $().cppy(".box", [
+        {
+            id: 4,
+            text: 'Pen'
+        },
+        {
+            id: 5,
+            text: 'Apple'
+        }
+    ]);
+
+});
+</script>
+
+<div data-cppy-temp class="box" data-id="$id">$text</div>

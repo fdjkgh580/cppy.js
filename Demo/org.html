@@ -1,0 +1,35 @@
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../src/jquery.cppy.js"></script>
+
+<script>
+$(function (){
+
+    // 原生方式，先加入兩筆資料
+    $.cppy.create({
+        ele: ".cppy",
+        data: [
+            {
+                id: 100,
+                text: 'Sun'
+            },
+            {
+                id: 200,
+                text: "Mon"
+            }
+        ]
+    });
+
+    // 再加入一筆資料
+    $.cppy.create({
+        ele: ".cppy",
+        data: {
+            id: 300,
+            text: 'Tue'
+        }
+    });
+
+
+});
+</script>
+
+<div data-cppy-temp class="cppy" data-id="$id">$text</div>

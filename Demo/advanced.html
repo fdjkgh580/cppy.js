@@ -1,0 +1,42 @@
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../src/jquery.cppy.js"></script>
+
+<script>
+$(function (){
+
+    $().cppy(".listiele", {
+        title: 'First'
+    })
+
+    $().cppy(".block > li", [
+        {
+            id: 1,
+            text: '項目一',
+            img: '../images/flower.jpg'
+        },
+        {
+            id: 2,
+            text: '項目二'
+        }
+    ])
+
+    $().cppy(".background", {
+        url : '../images/flower.jpg',
+    })
+
+});
+</script>
+
+<H3 data-cppy-temp class="listiele">$title</H3>
+
+<ul class="block">
+    <li data-cppy-temp>
+        $id.$text
+    </li>
+</ul>
+
+<div data-cppy-temp class="background">
+    <img data-cppy-background="$url" width="100">
+    <div data-cppy-background="$url"></div>
+</div>
+

@@ -1,0 +1,18 @@
+{
+  "name": "cppy.js",
+  "homepage": "https://github.com/fdjkgh580/cppy.js",
+  "authors": [
+    "JSN"
+  ],
+  "dependencies": {
+    "jquery": ">3.0.0"
+  },
+  "devDependencies": {
+    "jquery": ">3.0.0"
+  },
+  "keywords": [
+    "jquery",
+    "template"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,19 @@
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../src/jquery.cppy.js"></script>
+
+<script>
+$(function (){
+
+    $().cppy(".background", {
+        url : '../images/flower.jpg',
+    })
+
+});
+</script>
+
+<div data-cppy-temp class="background">
+    <img data-cppy-background="$url" width="100">
+    <br>
+    <div data-cppy-background="$url" style="width:100px; height: 100px; background-size: cover; "></div>
+</div>
+
