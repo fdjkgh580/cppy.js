@@ -52,6 +52,6 @@ $().cppy(".background", {
     url : '../images/flower.jpg',
 })
 ````
-
+就這麼簡單。若要看更多範例，可以參考 Demo/ 底下的文件。
 
 
