@@ -39,7 +39,7 @@ $().cppy(".box", [
 ````
 
 #指定圖片方式
-為了避免 <img src="$url"> 這種方式，會讓瀏覽器先拋出 get 到伺服器所產生無法讀取圖片的錯誤。網址的部分要改成 data-cppy-background="$url" 。
+為了避免 src="$url" 這種方式，會讓瀏覽器先拋出 get 到伺服器所產生無法讀取圖片的錯誤。網址的部分要改成 data-cppy-background="$url" 。
 ````html
 <div data-cppy-temp class="background">
     <img data-cppy-background="$url" width="100">
