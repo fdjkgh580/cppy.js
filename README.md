@@ -11,9 +11,11 @@ cppy.js
 </div>
 ````
 
-2.添加顯示資料
+##添加顯示資料
+- selector 選擇器
+- data 餵入的資料
 ````javascript
-$().cppy(selector, obj)
+$().cppy(selector, data)
 ````
 例如
 ````javascript
