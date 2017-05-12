@@ -4,30 +4,50 @@
 <script>
 $(function (){
 
+
     var data = [{
         id: '001',
         user: {
-            name: 'Chang Chi Shun',
-            image: {
-                m: 'png',
-                head: {
-                    b: 8,
-                    c: {
-                        z: 789,
-                        address: {
-                            city: 'Kaohsiung',
-                            road: {
-                                from: 'streetssss'
-                            }
-                        }
+            name: 'Chang',
+            address: {
+                from: 'Taiwan',
+                road: {
+                    city: 'Kaohsiung',
+                    street: {
+                        a: 'StreetSSS 1.',
+                        b: 'BoBo.'
                     }
-                }
+                } 
             }
         }
-    }]
+    }, {
+        id: '002',
+        user: {
+            name: 'Huang',
+            address: {
+                from: 'American',
+                road: {
+                    city: 'Taipei',
+                    street: {
+                        a: 'StreetSSS 2.',
+                        b: 'Lee.'
+                    }
+                } 
+            }
+        }
+    }];
 
     $().cppy(".multi", data);
 }); 
 </script>
 
-<div class="multi" data-cppy-temp>($id) $user-age </div>
+<ul data-cppy-temp class="multi">
+    <li>$id</li>
+    <ul>
+        <li>$user-name</li>
+        <li>$user-address-from</li>
+        <li>$user-address-road-city</li>
+        <li>$user-address-road-street-a</li>
+        <li>$user-address-road-street-b</li>
+    </ul>
+</ul>

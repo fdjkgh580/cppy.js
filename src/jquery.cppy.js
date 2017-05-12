@@ -19,6 +19,9 @@
     
         var _cppy;
 
+        // 平坦化使用的鍵名稱。命名具有繼承關聯
+        var _deep_key;
+
 
         // 無論如何都轉為二維
         this.prepare_data = function (data){
@@ -59,54 +62,58 @@
             return target[0].outerHTML;
         }
 
-        var _deep_key;
+        var _deep_each_row = function (rowkey, row){
+            // _deep_key 須要串接下去
+            _deep_key = _deep_key_name(rowkey);
+
+            $.each(row, function (cellkey, cell){
+
+                if ($.type(cell) === "object"){
+                
+                    _deep_key = _deep_key_name(cellkey);
+                    
+                }
+                
+                row = _deep(row, cellkey, cell);
+            });
+
+            return row;
+        }
+
+        var _deep_is_val = function (list, key, info, delete_key){
+            var str = _deep_key_name(key)
+            list[str] = info;
+            delete list[delete_key];
+            return list;
+        }
+
 
         // 深入
         var _deep = function (list, key, info){
 
-
+            // 若 info 沒有物件。但表是文字或數字了
             if ($.type(info) !== "object") {
 
-                var str = _deep_key + "-" + key;
-                list[str] = info;
-                delete list[key];
-
-                return list;
+               return _deep_is_val(list, key, info, key);
             }
 
+            // 若 info 是物件，批次取得
             $.each(info, function (rowkey, row){
 
-                
+                // 若欄位是物件
                 if ($.type(row) === "object") {
 
-                    _deep_key = _deep_key + "-" + rowkey;
-                    // list[_deep_key] = row;
+                    // 建立新物件
+                    var box = _deep_each_row(rowkey, row);
 
-                    $.each(row, function (cellkey, cell){
-                        if ($.type(cell) === "object"){
-                            _deep_key = _deep_key + "-" + cellkey;
-                            row = _deep(row, cellkey, cell);
-                        }
-                        else {
-                            row = _deep(row, cellkey, cell);
-                        }
-                    });
-
-                    // 刪除這個項目, 並擴充
-                    delete list[_deep_key];
-                    $.extend(list, row);
-                    
-
-                    // // console.log(row);
+                    // 刪除這個項目, 並擴充多筆 row
+                    $.extend(list, box);
                 }
+
+                // 若欄位不是物件，是字或數字
                 else {
-                    // var str = key + "-&gt;" + rowkey;
-                    str = _deep_key + "-" + rowkey;
 
-                    list[str] = row;
-
-                    // 刪除這個項目
-                    delete list[key];
+                    list = _deep_is_val(list, rowkey, row, key);
                 }
             });
 
@@ -115,33 +122,46 @@
             return list;
         }
 
-        this.multi2two = function (datalist){
+        var _deep_key_name = function (name){
+            // "-&gt;"
+            return _deep_key + "-" + name;
+        }
 
-            // 二維
+        var _deep_key_root = function (name){
+            _deep_key = name; // 指定 _deep_key 源頭名稱
+        }
+
+        // 平坦化：將二維以上的物件平坦至二維
+        this.flatten = function (datalist){
+
+            // 批次取得一維
             $.each(datalist, function (lkey, datainfo){
 
-                // 一維
-                $.each(datainfo, function (ikey, info){
+                // 取得一維中的每個項目
+                $.each(datainfo, function (rowkey, row){
 
                     // 若底下沒物件
-                    if ($.type(info) !== "object") return true;
+                    if ($.type(row) !== "object") return true;
 
-                    // 若是物件
-                    _deep_key = ikey;
-                    datainfo = _deep(datainfo, ikey, info);
+                    // 若是物件 
+                    _deep_key_root(rowkey); // 設定 _deep_key 源頭名稱
+
+                    // 深入判斷是否底下有物件，並組合
+                    datainfo = _deep(datainfo, rowkey, row);
                 });
 
             });
 
             console.log('\n\n\n\n');
             console.table(datalist);
+            return datalist;
         }
 
         // 模板處理
         this.template = function (datalist){
 
             // 多維轉二維
-            this.multi2two(datalist);
+            datalist = this.flatten(datalist);
 
             // 第一次?
             if (_is_init() === false){
