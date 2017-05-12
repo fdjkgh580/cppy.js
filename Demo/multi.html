@@ -1,0 +1,26 @@
+<script src="jquery-3.2.1.min.js"></script>
+<script src="../src/jquery.cppy.js"></script>
+
+<script>
+$(function (){
+
+    var data = [{
+        id: '001',
+        user: {
+            name: 'Chang Chi Shun',
+            age: 18,
+            image: {
+                s: 'jpg',
+                m: 'png',
+                head: {
+                    a: 7,
+                }
+            }
+        }
+    }]
+
+    $().cppy(".multi", data);
+}); 
+</script>
+
+<div class="multi" data-cppy-temp>($id) $user-age </div>

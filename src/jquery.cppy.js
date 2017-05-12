@@ -59,8 +59,83 @@
             return target[0].outerHTML;
         }
 
+        // 深入
+        var _deep = function (list, key, info, parentkey = ''){
+
+
+            if ($.type(info) !== "object") {
+                var str = parentkey + "-" + key;
+                list[str] = info;
+                delete list[key];
+
+                return list;
+            }
+
+            $.each(info, function (rowkey, row){
+
+                
+                if ($.type(row) === "object") {
+
+                    var str = key + "-" + rowkey;
+                    // list[str] = row;
+
+                    $.each(row, function (cellkey, cell){
+                        // console.log(str);return false;
+                        row = _deep(row, cellkey, cell, str);
+                    });
+
+                    $.extend(list, row);
+                    
+
+                    // console.log(row);
+                }
+                else {
+                    // var str = key + "-&gt;" + rowkey;
+                    var str = key + "-" + rowkey;
+                    list[str] = row;
+
+                    // 刪除這個項目
+                    delete list[key];
+                }
+            });
+
+            console.log(list);
+
+            return list;
+        }
+
+        this.multi2two = function (datalist){
+
+            // 二維
+            $.each(datalist, function (lkey, datainfo){
+
+                // 一維
+                $.each(datainfo, function (ikey, info){
+
+                    if ($.type(info) === "object") {
+
+                        datainfo = _deep(datainfo, ikey, info, '');
+
+                        
+                    }
+                    // 底下沒資料了
+                    else {
+
+                    }
+
+                });
+
+            });
+
+            console.log('\n\n\n\n');
+            console.table(datalist);
+        }
+
         // 模板處理
         this.template = function (datalist){
+
+            // 多維轉二維
+            this.multi2two(datalist);
 
             // 第一次?
             if (_is_init() === false){

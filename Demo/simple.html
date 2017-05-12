@@ -4,8 +4,8 @@
 <script>
 $(function (){
 
-    // 逐筆資料添加
-    
+    // 4. 逐筆資料添加
+    // 5. 指定 class。id 替換掉變數 $id, text 替換掉 $text 
     $().cppy(".box", {
         id: 1,
         text: 'First'
@@ -35,4 +35,7 @@ $(function (){
 });
 </script>
 
+<!-- 1. 加入 data-cppy-temp 屬性, 這個屬性會讓模板預先隱藏 -->
+<!-- 2. 加入 class 屬性 -->
+<!-- 3. HTML 中加入 $ 開頭的變數 -->
 <div data-cppy-temp class="box" data-id="$id">$text</div>
