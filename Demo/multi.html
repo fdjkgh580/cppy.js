@@ -8,71 +8,32 @@ $(function (){
         id: '001',
         user: {
             name: 'Chang',
-            address: {
-                from: 'Taiwan',
-                road: {
-                    city: 'Kaohsiung',
-                    street: {
-                        a: 'StreetSSS 1.',
-                        b: 'BoBo.'
-                    }
-                } 
-            }
-        }
-    }, {
-        id: '002',
-        user: {
-            name: 'Huang',
-            address: {
-                from: 'American',
-                road: {
-                    city: 'Taipei',
-                    street: {
-                        a: 'StreetSSS 2.',
-                        b: 'Lee.',
-                    }
-                } 
-            }
+            image: {
+                s: 's.png',
+                m: 'm.png'
+            },
+            phone: {
+                tel: '07-3333333',
+                mobile: '+886933-333-333'
+            },
         }
     }];
 
     $().cppy(".multi", data)
 
-    // $().cppy(".multi", data, function(obj){
-    //     $(".input_area_a").html(obj.html);
-    // });
-
-    var data = [{
-        id: '003',
-        user: {
-            name: 'Hans',
-            address: {
-                from: 'Taiwan',
-                road: {
-                    city: 'Kaohsiung',
-                    street: {
-                        a: 'StreetSSS 1.',
-                        b: 'BoBo.'
-                    }
-                } 
-            }
-        }
-    }];
-    $().cppy(".multi", data, function(obj){
-        $(".input_area_b").html(obj.html);
-    });
 
 }); 
 </script>
 
-<ul data-cppy-temp class="multi">
+<ul data-cppy-temp class="multi" id="$id">
     <li>$id</li>
     <ul>
         <li>$user-name</li>
-        <li>$user-address-from</li>
-        <li>$user-address-road-city</li>
-        <li>$user-address-road-street-a</li>
-        <li>$user-address-road-street-b</li>
+        <li>$user-age</li>
+        <li>$user-phone-tel</li>
+        <li>$user-phone-mobile</li>
+        <li>$user-image-s</li>
+        <li>$user-image-m</li>
     </ul>
 </ul>
 
