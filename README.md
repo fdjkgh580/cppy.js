@@ -67,6 +67,8 @@ $().cppy(".box", [
 ````
 
 # 巢狀資料
+- 物件 id 以 $id 表示
+- 物件 user.image.s 以 $user-image-s 表示
 ````javascript
 // AJAX
 var data = [{
