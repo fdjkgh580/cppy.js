@@ -7,14 +7,17 @@ cppy.js
 ````html
 <div data-cppy-temp></div>
 ````
+
 2. 加入 class 屬性
 ````html
 <div data-cppy-temp class="box"></div>
 ````
-3. 加入 $ 開頭的變數作為賢杰 Object 的值
+
+3. 加入 $ 開頭的變數作為銜接 Object 的值
 ````html
 <div data-cppy-temp class="box" data-id="$id">$text</div>
 ````
+
 4. 逐筆資料添加
 ````javascript
 $().cppy(".box", {
