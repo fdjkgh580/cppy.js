@@ -119,6 +119,10 @@
 
                     // 建立新物件
                     var box = _deep_each_row(rowkey, row);
+                    
+                    // 刪除物件
+                    delete list[key];
+
 
                     // // 刪除這個項目, 並擴充多筆 row
                     $.extend(list, box);
