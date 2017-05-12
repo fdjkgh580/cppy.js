@@ -59,12 +59,15 @@
             return target[0].outerHTML;
         }
 
+        var _deep_key;
+
         // 深入
-        var _deep = function (list, key, info, parentkey = ''){
+        var _deep = function (list, key, info){
 
 
             if ($.type(info) !== "object") {
-                var str = parentkey + "-" + key;
+
+                var str = _deep_key + "-" + key;
                 list[str] = info;
                 delete list[key];
 
@@ -76,22 +79,30 @@
                 
                 if ($.type(row) === "object") {
 
-                    var str = key + "-" + rowkey;
-                    // list[str] = row;
+                    _deep_key = _deep_key + "-" + rowkey;
+                    // list[_deep_key] = row;
 
                     $.each(row, function (cellkey, cell){
-                        // console.log(str);return false;
-                        row = _deep(row, cellkey, cell, str);
+                        if ($.type(cell) === "object"){
+                            _deep_key = _deep_key + "-" + cellkey;
+                            row = _deep(row, cellkey, cell);
+                        }
+                        else {
+                            row = _deep(row, cellkey, cell);
+                        }
                     });
 
+                    // 刪除這個項目, 並擴充
+                    delete list[_deep_key];
                     $.extend(list, row);
                     
 
-                    // console.log(row);
+                    // // console.log(row);
                 }
                 else {
                     // var str = key + "-&gt;" + rowkey;
-                    var str = key + "-" + rowkey;
+                    str = _deep_key + "-" + rowkey;
+
                     list[str] = row;
 
                     // 刪除這個項目
@@ -112,17 +123,12 @@
                 // 一維
                 $.each(datainfo, function (ikey, info){
 
-                    if ($.type(info) === "object") {
+                    // 若底下沒物件
+                    if ($.type(info) !== "object") return true;
 
-                        datainfo = _deep(datainfo, ikey, info, '');
-
-                        
-                    }
-                    // 底下沒資料了
-                    else {
-
-                    }
-
+                    // 若是物件
+                    _deep_key = ikey;
+                    datainfo = _deep(datainfo, ikey, info);
                 });
 
             });
