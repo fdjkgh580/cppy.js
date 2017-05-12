@@ -106,6 +106,21 @@ var data = [{
 $().cppy(".multi", data);
 ````
 
+## 輸出
+````html
+<ul class="multi" id="001" data-cppy-class="cppy-1494582772385">
+    <li>001</li>
+    <ul>
+        <li>Chang</li>
+        <li>30</li>
+        <li>07-3333333</li>
+        <li>+886933-333-333</li>
+        <li>s.png</li>
+        <li>m.png</li>
+    </ul>
+</ul>
+````
+
 # 將模板寫入其他位置
 ````javascript
 var data = [{
