@@ -152,8 +152,7 @@ var data = [{
     </ul>
 </ul>
 
-<div class="input_area_a"></div>
-<div class="input_area_b"></div>
+<div class="area_a"></div>
 ````
 ````javascript
 $().cppy(".multi", data, function(obj){
