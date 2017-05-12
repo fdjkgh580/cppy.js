@@ -66,6 +66,9 @@
 
 
         var _deep_each_row = function (rowkey, row){
+            
+            // 複製一份提供最後還原
+            var _deep_key_clone = _deep_key;
 
             // _deep_key 須要串接下去
             _deep_key = _deep_key_name(rowkey);
@@ -73,13 +76,14 @@
             $.each(row, function (cellkey, cell){
 
                 if ($.type(cell) === "object"){
-                
                     _deep_key = _deep_key_name(cellkey);
-                    
                 }
                 
                 row = _deep(row, cellkey, cell);
             });
+
+            // 還原
+            _deep_key = _deep_key_clone;
 
             return row;
         }
@@ -116,7 +120,7 @@
                     // 建立新物件
                     var box = _deep_each_row(rowkey, row);
 
-                    // 刪除這個項目, 並擴充多筆 row
+                    // // 刪除這個項目, 並擴充多筆 row
                     $.extend(list, box);
                 }
 
