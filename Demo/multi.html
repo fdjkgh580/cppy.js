@@ -29,19 +29,23 @@ $(function (){
                     city: 'Taipei',
                     street: {
                         a: 'StreetSSS 2.',
-                        b: 'Lee.'
+                        b: 'Lee.',
                     }
                 } 
             }
         }
     }];
 
-    $().cppy(".multi", data);
+    $().cppy(".multi", data)
+
+    // $().cppy(".multi", data, function(obj){
+    //     $(".input_area_a").html(obj.html);
+    // });
 
     var data = [{
         id: '003',
         user: {
-            name: 'Chang',
+            name: 'Hans',
             address: {
                 from: 'Taiwan',
                 road: {
@@ -54,8 +58,9 @@ $(function (){
             }
         }
     }];
-
-    $().cppy(".multi", data);
+    $().cppy(".multi", data, function(obj){
+        $(".input_area_b").html(obj.html);
+    });
 
 }); 
 </script>
@@ -72,4 +77,5 @@ $(function (){
 </ul>
 
 
-<div class="input_area"></div>
+<div class="input_area_a"></div>
+<div class="input_area_b"></div>

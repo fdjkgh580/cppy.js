@@ -1,7 +1,7 @@
 (function ($) {
 
     var global_version           = "2.1.0";
-    var global_org_template_html = false; // 原始模板
+    var global_org_template      = false; // 原始模板
     var global_isinit            = false;
     var global_selector          = false; // 選擇棄
     $.cppy                       = {}
@@ -127,7 +127,7 @@
                 }
             });
 
-            console.log(list);
+            // console.log(list);
 
             return list;
         }
@@ -164,8 +164,8 @@
 
             });
 
-            console.log('\n\n\n\n');
-            console.table(datalist);
+            // console.log('\n\n\n\n');
+            // console.table(datalist);
             return datalist;
         }
 
@@ -177,22 +177,34 @@
 
             // 第一次?
             if (_is_init() === false){
-                global_org_template_html = $(global_selector)[0].outerHTML;
+                global_org_template = $(global_selector).clone()[0];
             }
+            
+            var timestamp = new Date().getTime(); // 時間戳記
+            var cppy_class = "cppy-" + timestamp; // 類別
+
+            $(global_org_template).attr("data-cppy-class", cppy_class)
+            var template_html = global_org_template.outerHTML;
+
 
             var box    = [];
             var boxkey = 0;
             
             // 批次替換後合併。 如 {id: 100} ，會把 $id 替換為 100
             $.each(datalist, function (key, datainfo){
-                box[boxkey] = _cppy.key2val(global_org_template_html, datainfo);
+                box[boxkey] = _cppy.key2val(template_html, datainfo);
                 box[boxkey] = _switch_background(box[boxkey]);
                 boxkey++;
             })
 
             var mix_html_code = box.join('');
 
-            return mix_html_code;
+            return {
+                cppy_class: cppy_class,
+                timestamp: timestamp,
+                html: mix_html_code,
+                datalist: datalist
+            };
         }
 
         this.key2val = function (code, datainfo){
@@ -228,7 +240,7 @@
             }
 
             // 顯示
-            $(global_selector).removeAttr('data-cppy-temp');
+            _display_cppy_result_template(global_selector)
         }
 
         // 指派選擇器
@@ -248,10 +260,16 @@
             return $(global_selector).length >= 0;
         }
 
+        // 顯示複製後的成果
+        var _display_cppy_result_template = function (selector){
+            $(selector).removeAttr('data-cppy-temp')
+        }
+
         this.main = function (param){
 
             _cppy    = this;
             _set_selector(param.ele);
+
 
             // 忽略不存在
             if (_is_exist_selector() === false) return false;
@@ -259,13 +277,23 @@
             // 無論如何都轉為二維
             var input_data = _cppy.prepare_data(param.data);
 
-            var newcode = _cppy.template(input_data);
+            var temp = _cppy.template(input_data);
 
-            _cppy.put(newcode);
-
+            // 
+            if (param.success) {
+                // console.log(temp)
+                param.success.call(this, temp);
+                var leng = $("[data-cppy-class="+temp.cppy_class+"]").length;
+                _display_cppy_result_template("[data-cppy-class="+temp.cppy_class+"]")
+            }
+            else {
+                _cppy.put(temp.html);
+            }
 
             // 初始化標記
             if (_is_init() === false) _set_init(true);
+
+
         }
 
 
@@ -273,10 +301,11 @@
         this.main(param);
     }
     
-    $.fn.cppy = function(selector, data) {
+    $.fn.cppy = function(selector, data, success) {
         $.cppy.create({
             ele: selector,
-            data: data
+            data: data,
+            success: success
         })
     };
 
