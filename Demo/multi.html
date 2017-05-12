@@ -4,7 +4,6 @@
 <script>
 $(function (){
 
-
     var data = [{
         id: '001',
         user: {
@@ -38,6 +37,26 @@ $(function (){
     }];
 
     $().cppy(".multi", data);
+
+    var data = [{
+        id: '003',
+        user: {
+            name: 'Chang',
+            address: {
+                from: 'Taiwan',
+                road: {
+                    city: 'Kaohsiung',
+                    street: {
+                        a: 'StreetSSS 1.',
+                        b: 'BoBo.'
+                    }
+                } 
+            }
+        }
+    }];
+
+    $().cppy(".multi", data);
+
 }); 
 </script>
 
@@ -51,3 +70,6 @@ $(function (){
         <li>$user-address-road-street-b</li>
     </ul>
 </ul>
+
+
+<div class="input_area"></div>

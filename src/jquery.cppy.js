@@ -1,6 +1,6 @@
 (function ($) {
 
-    var global_version           = "2.0.0";
+    var global_version           = "2.1.0";
     var global_org_template_html = false; // 原始模板
     var global_isinit            = false;
     var global_selector          = false; // 選擇棄
