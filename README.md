@@ -4,8 +4,14 @@ cppy.js
 
 # 單筆資料
 1. 加入 data-cppy-temp 屬性, 這個屬性會讓模板預先隱藏
+````html
+<div data-cppy-temp></div>
+````
 2. 加入 class 屬性
-3. HTML 中加入 $ 開頭的變數
+````html
+<div data-cppy-temp class="box"></div>
+````
+3. 加入 $ 開頭的變數作為賢杰 Object 的值
 ````html
 <div data-cppy-temp class="box" data-id="$id">$text</div>
 ````
