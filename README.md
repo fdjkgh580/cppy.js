@@ -18,7 +18,7 @@ cppy.js
 <div data-cppy-temp class="box" data-id="$id">$text</div>
 ````
 
-4. 逐筆資料添加
+4. 添加資料
 ````javascript
 $().cppy(".box", {
     id: 1,
