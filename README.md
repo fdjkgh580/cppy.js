@@ -32,9 +32,6 @@ $().cppy(".box", {
 
 
 # 連續加入資料
-````html
-<div data-cppy-temp class="box" data-id="$id">$text</div>
-````
 ````javascript
 $().cppy(".box", {
     id: 1,
@@ -57,6 +54,10 @@ $().cppy(".box", [
     }
 ]);
 ````
+````html
+<div data-cppy-temp class="box" data-id="$id">$text</div>
+````
+
 ## 輸出
 ````html
 <div class="box" data-id="1" data-cppy-class="cppy-1494581351983">First</div>
