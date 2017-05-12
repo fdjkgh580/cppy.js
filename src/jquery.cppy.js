@@ -22,6 +22,8 @@
         // 平坦化使用的鍵名稱。命名具有繼承關聯
         var _deep_key;
 
+        // 模板黏接的符號
+        var _glue = "-";
 
         // 無論如何都轉為二維
         this.prepare_data = function (data){
@@ -62,7 +64,9 @@
             return target[0].outerHTML;
         }
 
+
         var _deep_each_row = function (rowkey, row){
+
             // _deep_key 須要串接下去
             _deep_key = _deep_key_name(rowkey);
 
@@ -80,6 +84,13 @@
             return row;
         }
 
+        /**
+         * 若不是物件
+         * @param   list       
+         * @param   key        
+         * @param   info       
+         * @param   delete_key 要刪除的 key
+         */
         var _deep_is_val = function (list, key, info, delete_key){
             var str = _deep_key_name(key)
             list[str] = info;
@@ -91,9 +102,8 @@
         // 深入
         var _deep = function (list, key, info){
 
-            // 若 info 沒有物件。但表是文字或數字了
+            // 若 info 沒有物件，那返回 list
             if ($.type(info) !== "object") {
-
                return _deep_is_val(list, key, info, key);
             }
 
@@ -122,11 +132,13 @@
             return list;
         }
 
+        // 設定 _deep_key 名稱
         var _deep_key_name = function (name){
             // "-&gt;"
-            return _deep_key + "-" + name;
+            return _deep_key + _glue + name;
         }
 
+        // 設定 _deep_key 原始名稱
         var _deep_key_root = function (name){
             _deep_key = name; // 指定 _deep_key 源頭名稱
         }
@@ -140,7 +152,7 @@
                 // 取得一維中的每個項目
                 $.each(datainfo, function (rowkey, row){
 
-                    // 若底下沒物件
+                    // 若底下沒物件，不處理
                     if ($.type(row) !== "object") return true;
 
                     // 若是物件 
