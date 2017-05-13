@@ -177,7 +177,18 @@ $().cppy(".multi", data, function(obj){
 ````
 
 # 圖片
-為了避免 src="$url" 這種方式，會讓瀏覽器先拋出 get 到伺服器所產生無法讀取圖片的錯誤。網址的部分要改成 data-cppy-background="$url" ， cppy.js 會自動幫您替換為 src="" 的屬性或 CSS 背景。
+為了避免 src="$url" 這種方式，會讓瀏覽器先拋出 get 到伺服器所產生無法讀取圖片的錯誤。圖片網址要改成 data-cppy-background="$url"
+````html
+<img data-cppy-background="$url">
+<div data-cppy-background="$url" ></div>
+````
+cppy.js 會自動幫您替換為 src="" 的屬性或 CSS 背景。
+````html
+<img src="...">
+<div style="background-image: url(...)"></div>
+````
+
+例如
 ````html
 <div data-cppy-temp class="background">
     <img data-cppy-background="$url" width="100">
@@ -190,6 +201,13 @@ $().cppy(".background", {
     url : '../images/flower.jpg',
 })
 ````
+````html
+<div class="background" data-cppy-class="cppy-1494639464843">
+    <img width="100" src="../images/flower.jpg">
+    <div style="width: 100px; height: 100px; background-size: cover; background-image: url("../images/flower.jpg");"></div>
+</div>
+````
+
 就這麼簡單。若要看更多範例，可以參考 Demo/ 底下的文件。
 
 
