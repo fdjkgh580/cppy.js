@@ -1,0 +1,79 @@
+<script src="jquery-3.2.1.min.js"></script>
+<script src="../src/jquery.cppy.js"></script>
+
+<script>
+$(function (){
+
+    $.ajax("http://dev.api.westamps.com/v1/user/stamps", {
+        type: "GET",
+        dataType : "jsonp",
+        data: {
+            user_id: '196',
+            access_token: 'dee9e45659c6ab87c60bb40a94755fd6a95d16cd6d4921e7481737742abf0c7549bbbf9e2f4a5ba46d029908204d4596507d26a9793e0651efe3f614a32b5c50',
+            limit: 10,
+            offset: 0,
+        },
+        success: function (obj){
+
+            // console.log(obj.data)
+            $().cppy(".multi", obj.data);
+
+        }
+    })    
+
+    
+
+
+
+//     var data = [{
+//         id: '001',
+//         user: {
+//             name: 'Chang',
+//             image: {
+//                 s: 's.png',
+//                 m: 'm.png'
+//             },
+//             phone: {
+//                 tel: '07-3333333',
+//                 mobile: '+886933-333-333'
+//             },
+//             age: 30
+//         }
+//     }];
+
+// $().cppy(".multi", data);
+
+
+}); 
+</script>
+<ul data-cppy-temp class="multi">
+    <li>$stamp_id</li>
+    <ul>
+        <li>$stamp_name</li>
+        <li>$images-s-filename</li>
+        <li>
+            <img data-cppy-background="$images-s-url" width="100">
+        </li>
+    </ul>
+</ul>
+
+
+<!-- 
+
+
+
+<ul data-cppy-temp class="multi" id="$id">
+    <li>$id</li>
+    <ul>
+        <li>$user-name</li>
+        <li>$user-age</li>
+        <li>$user-phone-tel</li>
+        <li>$user-phone-mobile</li>
+        <li>$user-image-s</li>
+        <li>$user-image-m</li>
+    </ul>
+</ul>
+
+
+<div class="area_a"></div>
+ -->

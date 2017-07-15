@@ -34,7 +34,9 @@ $(function (){
         }
     }];
 
-    $().cppy(".multi", data);
+    $().cppy(".multi", data, function (data){
+        $(".area").html(data.html);
+    });
 
 
 }); 
@@ -55,4 +57,4 @@ $(function (){
 </ul>
 
 
-<div class="area_a"></div>
+<div class="area"></div>
