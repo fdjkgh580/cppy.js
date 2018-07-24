@@ -2,6 +2,10 @@ cppy.js
 =======
 添加 JSON 數據，自動在地模版，簡化你的工作。
 
+````
+npm i jquery.vpage.js
+````
+
 # 單筆資料
 1. 加入 data-cppy-temp 屬性, 這個屬性會讓模板預先隱藏
 ````html
